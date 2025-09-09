@@ -2,6 +2,8 @@
 
 [![Security Audit](https://github.com/bartossh/play-with-csv/actions/workflows/audit.yml/badge.svg)](https://github.com/bartossh/play-with-csv/actions/workflows/audit.yml)
 
+[![PR Checks](https://github.com/bartossh/play-with-csv/actions/workflows/pre-checks.yml/badge.svg)](https://github.com/bartossh/play-with-csv/actions/workflows/pre-checks.yml)
+
 ## Key part description.
 
 ### Ladger module

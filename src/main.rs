@@ -4,12 +4,12 @@ use std::env;
 use std::fs::File;
 use std::io::{self};
 
-mod writer;
 mod errors;
-mod processor;
-mod models;
 mod ledger;
+mod models;
+mod processor;
 mod traits;
+mod writer;
 
 const DEFAULT_HAS_HEADERS: bool = true;
 
