@@ -15,7 +15,7 @@ pub struct Engine<T, S> {
 
 impl<T, I> Engine<T, I>
 where
-    T: CSVWrite + Sync + Send,
+    T: CSVWrite,
     I: CSVExport + Accounting,
 {
     pub fn new(writer: T, reader: Reader<Box<dyn Read>>, accountant: I) -> Self {

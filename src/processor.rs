@@ -12,7 +12,7 @@ use std::{
 pub struct Accountant {
     clients: HashMap<u16, ClientBalance>,
     transactions: HashMap<u32, Transaction>,
-    transaction_in_historical: Vec<u32>,
+    transaction_historical_order: Vec<u32>,
     transactions_rejected: Vec<u32>,
 }
 
@@ -21,7 +21,7 @@ impl Accountant {
         Self {
             clients: HashMap::new(),
             transactions: HashMap::new(),
-            transaction_in_historical: Vec::new(),
+            transaction_historical_order: Vec::new(),
             transactions_rejected: Vec::new(),
         }
     }
@@ -34,7 +34,7 @@ impl Accounting for Accountant {
         match self.transactions.entry(transaction_id) {
             Entry::Vacant(entry) => {
                 entry.insert(transaction.clone());
-                self.transaction_in_historical.push(transaction_id);
+                self.transaction_historical_order.push(transaction_id);
             }
             Entry::Occupied(_) => match transaction.type_() {
                 TransactionType::Deposit | TransactionType::Withdrawal => {
@@ -43,7 +43,7 @@ impl Accounting for Accountant {
                 _ => (),
             },
         }
-        self.transaction_in_historical.push(transaction_id);
+        self.transaction_historical_order.push(transaction_id);
 
         let client_id = *transaction.client();
 
@@ -167,9 +167,7 @@ mod tests {
     }
 
     fn create_transaction(tx: u32, client: u16, amount: &str, type_: &str) -> Result<Transaction> {
-        let file_str = format!(
-            "type,client,tx,amount\n{type_},{client},{tx},{amount}\n"
-        );
+        let file_str = format!("type,client,tx,amount\n{type_},{client},{tx},{amount}\n");
 
         let mut reader = csv::ReaderBuilder::new()
             .has_headers(true)
