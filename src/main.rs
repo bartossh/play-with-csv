@@ -4,11 +4,11 @@ use std::env;
 use std::fs::File;
 use std::io::{self};
 
-mod csv_writer;
+mod writer;
 mod errors;
-mod ledger;
-mod models;
 mod processor;
+mod models;
+mod ledger;
 mod traits;
 
 const DEFAULT_HAS_HEADERS: bool = true;
@@ -24,10 +24,10 @@ fn main() -> Result<()> {
     let reader = ReaderBuilder::new()
         .has_headers(DEFAULT_HAS_HEADERS)
         .from_reader(input);
-    let writer = csv_writer::StdOutCSVWriter::new();
-    let accountant = processor::Accountant::new();
+    let writer = writer::StdOutCSVWriter::new();
+    let accountant = ledger::Accountant::new();
 
-    let mut engine = ledger::Engine::new(writer, reader, accountant);
+    let mut engine = processor::Engine::new(writer, reader, accountant);
 
     engine.run()?;
 
