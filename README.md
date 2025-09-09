@@ -35,4 +35,12 @@ I decided to not use async await or threading to simplify the problem and until 
 But if there will be a need to process very large amount of data I would allow myself to create multithreaded processing with Arc + Mutex lock on the ClientBalance level. There will be still posibility that transaction might be processed out of order, for example when client A sends founds to client B (trx 0) and client B (having zero balance) sends funds to C (trx 1) and trx 1 comes before trx 0.
 I would need to give it more thought how to handle this case and research more about it.
 
+## Testing
+
+For unit test simply run:
+
+```
+cargo test
+```
+
 **This task was great fun to solve!**
